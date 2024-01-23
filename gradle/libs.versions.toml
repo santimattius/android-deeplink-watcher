@@ -27,6 +27,8 @@ coil = "2.5.0"
 junit = "4.13.2"
 junitExt = "1.1.5"
 espressoCore = "3.5.1"
+appcompat = "1.6.1"
+material = "1.11.0"
 
 [libraries]
 # Define the libraries
@@ -72,6 +74,8 @@ test_ext = { module = "androidx.test.ext:junit", version.ref = "junitExt" }
 test_espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
 ##Plugins
 dep-google-secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "googleSecretsPlugin" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [bundles]
 # Define bundles/groups of libraries

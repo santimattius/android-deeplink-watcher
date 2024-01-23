@@ -13,5 +13,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "android-basic-skeleton"
+rootProject.name = "android-deeplink-watcher"
 include ':app'
+include ':watcher'

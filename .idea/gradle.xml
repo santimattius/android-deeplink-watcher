@@ -23,6 +23,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/plugins" />
+            <option value="$PROJECT_DIR$/watcher" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
