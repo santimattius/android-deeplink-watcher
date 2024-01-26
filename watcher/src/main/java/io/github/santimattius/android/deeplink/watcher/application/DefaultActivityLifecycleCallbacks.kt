@@ -5,6 +5,7 @@ import android.app.Application
 import android.os.Bundle
 
 internal interface DefaultActivityLifecycleCallbacks : Application.ActivityLifecycleCallbacks {
+
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
 
     override fun onActivityStarted(activity: Activity) {}

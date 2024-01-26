@@ -9,21 +9,25 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Message
+import androidx.compose.material.icons.filled.OpenInNew
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.santimattius.basic.skeleton.ui.component.BasicSkeletonContainer
 import dagger.hilt.android.AndroidEntryPoint
+import io.github.santimattius.android.deeplink.watcher.application.DeeplinkWatcher
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -53,10 +57,16 @@ fun MainScreen(
     state: MainUiState,
     onMainAction: () -> Unit,
 ) {
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(text = stringResource(id = R.string.app_name)) },
+                actions = {
+                    IconButton(onClick = { DeeplinkWatcher.showViewer(context) }) {
+                        Icon(imageVector = Icons.Default.OpenInNew, contentDescription = null)
+                    }
+                }
             )
         },
         floatingActionButton = {

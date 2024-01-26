@@ -91,6 +91,7 @@ dependencies {
 
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
+    implementation(project(":watcher"))
     debugImplementation(libs.bundles.compose.debug)
 
     implementation(libs.bundles.coroutine)
