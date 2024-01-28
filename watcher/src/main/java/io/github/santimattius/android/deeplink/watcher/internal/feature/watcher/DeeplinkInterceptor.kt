@@ -2,10 +2,20 @@ package io.github.santimattius.android.deeplink.watcher.internal.feature.watcher
 
 import android.app.Activity
 import android.net.Uri
-import io.github.santimattius.android.deeplink.watcher.application.DefaultActivityLifecycleCallbacks
 import io.github.santimattius.android.deeplink.watcher.application.ExcludeDeeplinkWatch
+import io.github.santimattius.android.deeplink.watcher.internal.core.data.DeeplinkRepository
+import io.github.santimattius.android.deeplink.watcher.internal.core.domain.Deeplink
+import io.github.santimattius.android.deeplink.watcher.internal.core.lifecycle.DefaultActivityLifecycleCallbacks
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
-internal class DeeplinkInterceptor : DefaultActivityLifecycleCallbacks {
+internal class DeeplinkInterceptor(
+    private val repository: DeeplinkRepository,
+) : DefaultActivityLifecycleCallbacks {
+
+    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     override fun onActivityStarted(activity: Activity) {
         if (ensureWatchDeeplink(activity)) return
@@ -20,7 +30,11 @@ internal class DeeplinkInterceptor : DefaultActivityLifecycleCallbacks {
         return activity::class.annotations.any { it.annotationClass == ExcludeDeeplinkWatch::annotationClass }
     }
 
-    private fun saveDeeplinkData(deeplink: Uri?, referrer: Uri?) {
-
+    private fun saveDeeplinkData(uri: Uri?, referrer: Uri?) {
+        if (uri == null) return
+        val deeplink = Deeplink.create(uri.toString(), referrer?.toString())
+        coroutineScope.launch {
+            repository.insert(deeplink)
+        }
     }
 }

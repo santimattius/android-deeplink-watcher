@@ -25,10 +25,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.github.santimattius.android.deeplink.watcher.application.ExcludeDeeplinkWatch
 import io.github.santimattius.android.deeplink.watcher.internal.core.ui.components.AppBar
 import io.github.santimattius.android.deeplink.watcher.internal.core.ui.components.AppBarIconModel
 import io.github.santimattius.android.deeplink.watcher.internal.core.ui.components.DeeplinkWatcherContainer
 
+@ExcludeDeeplinkWatch
 class DeeplinksViewerActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +73,7 @@ private fun DeeplinkViewerContent(
     ) {
         Column {
             SearchBar()
-            DeeplinkViewColletion()
+            DeeplinkViewCollection()
         }
     }
 }
@@ -88,7 +90,7 @@ private fun SearchBar() {
 }
 
 @Composable
-private fun DeeplinkViewColletion() {
+private fun DeeplinkViewCollection() {
     LazyColumn(
         modifier = Modifier.padding(start = 16.dp, end = 16.dp)
     ) {

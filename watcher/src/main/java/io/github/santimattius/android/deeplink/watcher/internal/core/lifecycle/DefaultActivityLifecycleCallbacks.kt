@@ -1,4 +1,4 @@
-package io.github.santimattius.android.deeplink.watcher.application
+package io.github.santimattius.android.deeplink.watcher.internal.core.lifecycle
 
 import android.app.Activity
 import android.app.Application
