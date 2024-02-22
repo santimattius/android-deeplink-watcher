@@ -25,18 +25,19 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="santimattius"
-                    android:pathPrefix="/test"
-                    android:scheme="app" />
+                <data android:scheme="app"/>
+                <data android:host="santimattius"/>
+                <data android:pathPrefix="/test"/>
 
+                <data android:scheme="https"/>
+                <data android:host="github.com"/>
+                <data android:pathPrefix="/santimattius"/>
             </intent-filter>
 
         </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.BasicSkeleton">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

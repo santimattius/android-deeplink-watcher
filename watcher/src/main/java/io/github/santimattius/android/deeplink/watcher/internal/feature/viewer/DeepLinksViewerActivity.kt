@@ -80,6 +80,7 @@ private fun DeeplinkViewerScreen(
                 .fillMaxSize()
                 .padding(padding),
             state = state,
+            onTextChange = viewModel::onWritingSearch,
             onSearch = viewModel::onSearch
         )
     }
@@ -89,7 +90,8 @@ private fun DeeplinkViewerScreen(
 private fun DeeplinkViewerContent(
     modifier: Modifier = Modifier,
     state: DeeplinkViewerUiState,
-    onSearch: (String) -> Unit,
+    onTextChange: (String) -> Unit,
+    onSearch: () -> Unit,
 ) {
     Box(
         modifier = modifier
@@ -97,7 +99,9 @@ private fun DeeplinkViewerContent(
         Column {
             SearchBar(
                 model = state.text,
-                onTextChange = onSearch
+                label = "Ej. scheme://host/path",
+                onTextChange = onTextChange,
+                onImeAction = onSearch,
             )
             DeeplinkViewCollection(state.data)
         }
@@ -107,7 +111,9 @@ private fun DeeplinkViewerContent(
 @Composable
 private fun DeeplinkViewCollection(data: List<Deeplink>) {
     LazyColumn(
-        modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 16.dp, end = 16.dp)
     ) {
         items(data, key = { it.id }) { deeplink ->
             DeeplinkItem(deeplink)

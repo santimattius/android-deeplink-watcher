@@ -2,27 +2,68 @@ package io.github.santimattius.android.deeplink.watcher.internal.feature.viewer.
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 
 @Immutable
 data class SearchBarModel(
-    val text: String
+    val value: String
 )
 
 @Composable
 internal fun SearchBar(
     model: SearchBarModel,
+    label: String,
     onTextChange: (String) -> Unit,
+    onImeAction: () -> Unit = {},
 ) {
-    OutlinedTextField(
+    InputText(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-        value = model.text,
-        onValueChange = onTextChange
+        text = model.value,
+        label = label,
+        onTextChange = onTextChange,
+        onImeAction = onImeAction
+    )
+}
+
+@Composable
+private fun InputText(
+    text: String,
+    label: String,
+    onTextChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    onImeAction: () -> Unit = {},
+) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    OutlinedTextField(
+        value = text,
+        onValueChange = onTextChange,
+        maxLines = 1,
+        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
+        keyboardActions = KeyboardActions(onSearch = {
+            onImeAction()
+            keyboardController?.hide()
+        }),
+        modifier = modifier,
+        placeholder = { Text(text = label) },
+        trailingIcon = {
+            IconButton(onClick = onImeAction) {
+                Icon(imageVector = Icons.Outlined.Search, contentDescription = "search")
+            }
+        }
     )
 }

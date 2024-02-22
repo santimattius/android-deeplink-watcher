@@ -15,7 +15,7 @@ internal class DeeplinkInterceptor(
     private val repository: DeeplinkRepository,
 ) : DefaultActivityLifecycleCallbacks {
 
-    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val coroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     override fun onActivityStarted(activity: Activity) {
         if (ensureWatchDeeplink(activity)) return
