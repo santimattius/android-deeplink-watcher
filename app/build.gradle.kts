@@ -68,6 +68,7 @@ android {
     packaging {
         resources {
             excludes.add("/META-INF/{AL2.0,LGPL2.1}")
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
 }
@@ -91,8 +92,16 @@ dependencies {
 
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
+    implementation(libs.activity.compose)
     implementation(project(":watcher"))
-    debugImplementation(libs.bundles.compose.debug)
+    implementation(libs.compose.ui)
+    implementation(libs.ui.graphics)
+    implementation(libs.compose.tooling.preview)
+    implementation(libs.material3)
+    androidTestImplementation(platform(libs.compose.bom))
+
+    debugImplementation(libs.compose.tooling)
+    debugImplementation(libs.compose.ui.test.manifest)
 
     implementation(libs.bundles.coroutine)
     testImplementation(libs.coroutine.test)

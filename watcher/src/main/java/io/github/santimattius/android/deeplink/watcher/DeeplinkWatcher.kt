@@ -1,15 +1,15 @@
-package io.github.santimattius.android.deeplink.watcher.application
+package io.github.santimattius.android.deeplink.watcher
 
 import android.content.Context
 import android.content.Intent
-import io.github.santimattius.android.deeplink.watcher.internal.feature.viewer.DeeplinksViewerActivity
+import io.github.santimattius.android.deeplink.watcher.internal.feature.viewer.DeepLinksViewerActivity
 import io.github.santimattius.android.deeplink.watcher.internal.initializer.DeeplinkWatcherInitializer
 
 object DeeplinkWatcher {
 
     @JvmStatic
     fun showViewer(context: Context) {
-        val intent = Intent(context, DeeplinksViewerActivity::class.java)
+        val intent = Intent(context, DeepLinksViewerActivity::class.java)
         context.startActivity(intent)
     }
 

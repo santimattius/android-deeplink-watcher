@@ -1,33 +1,39 @@
 package com.santimattius.basic.skeleton
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.filled.OpenInNew
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.santimattius.basic.skeleton.ui.component.BasicSkeletonContainer
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.santimattius.android.deeplink.watcher.application.DeeplinkWatcher
+import io.github.santimattius.android.deeplink.watcher.DeeplinkWatcher
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -58,6 +64,7 @@ fun MainScreen(
     onMainAction: () -> Unit,
 ) {
     val context = LocalContext.current
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -69,25 +76,36 @@ fun MainScreen(
                 }
             )
         },
-        floatingActionButton = {
-            FloatingActionButton(onClick = onMainAction) {
-                Icon(
-                    imageVector = Icons.Filled.Message,
-                    contentDescription = stringResource(R.string.text_desc_main_action)
-                )
-            }
-        }
     ) {
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it),
-            contentAlignment = Alignment.Center
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (state.isLoading) {
-                CircularProgressIndicator()
-            } else {
-                Text(text = state.message)
+            var text by remember { mutableStateOf("") }
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                value = text,
+                onValueChange = { newText -> text = newText },
+            )
+            val uriHandler = LocalUriHandler.current
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                enabled = text.isNotBlank(),
+                onClick = {
+                    try {
+                        uriHandler.openUri(text)
+                    } catch (ex: Throwable) {
+                        Toast.makeText(context, "Execute failed!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            ) {
+                Text(text = "Execute")
             }
         }
     }
@@ -98,7 +116,7 @@ fun MainScreen(
 fun DefaultPreview() {
     BasicSkeletonContainer {
         MainScreen(
-            state = MainUiState(isLoading = false, message = "Hello Android"),
+            state = MainUiState(isLoading = false, message = "Sample App"),
             onMainAction = {},
         )
     }

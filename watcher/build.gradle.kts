@@ -68,7 +68,6 @@ dependencies {
     implementation(libs.material3)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.compose.ui.test.junit)
-    debugImplementation(libs.bundles.compose.debug)
 
     //Coroutine
     implementation(libs.bundles.coroutine)

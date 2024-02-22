@@ -3,13 +3,13 @@ package io.github.santimattius.android.deeplink.watcher.internal.feature.viewer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Info
@@ -17,33 +17,50 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import io.github.santimattius.android.deeplink.watcher.application.ExcludeDeeplinkWatch
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.github.santimattius.android.deeplink.watcher.annotations.ExcludeDeeplinkWatch
+import io.github.santimattius.android.deeplink.watcher.internal.core.domain.Deeplink
 import io.github.santimattius.android.deeplink.watcher.internal.core.ui.components.AppBar
 import io.github.santimattius.android.deeplink.watcher.internal.core.ui.components.AppBarIconModel
 import io.github.santimattius.android.deeplink.watcher.internal.core.ui.components.DeeplinkWatcherContainer
+import io.github.santimattius.android.deeplink.watcher.internal.di.createDeepLinksViewerViewModel
+import io.github.santimattius.android.deeplink.watcher.internal.feature.viewer.components.SearchBar
 
 @ExcludeDeeplinkWatch
-class DeeplinksViewerActivity : ComponentActivity() {
+class DeepLinksViewerActivity : ComponentActivity() {
+
+    private val viewModel: DeepLinksViewerViewModel by viewModels {
+        createDeepLinksViewerViewModel()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             DeeplinkWatcherContainer {
-                DeeplinkViewerScreen()
+                DeeplinkViewerScreen(
+                    viewModel = viewModel,
+                    onClose = {
+                        finish()
+                    }
+                )
             }
         }
     }
 }
 
 @Composable
-fun DeeplinkViewerScreen() {
+private fun DeeplinkViewerScreen(
+    viewModel: DeepLinksViewerViewModel,
+    onClose: () -> Unit,
+) {
     Scaffold(
         topBar = {
             AppBar(
@@ -51,75 +68,68 @@ fun DeeplinkViewerScreen() {
                 navIcon = AppBarIconModel(
                     icon = Icons.Default.Close,
                     contentDescription = "close",
-                    action = {
-
-                    }
+                    action = onClose
                 )
             )
         }
     ) { padding ->
-        DeeplinkViewerContent(padding)
+
+        val state by viewModel.uiState.collectAsStateWithLifecycle()
+        DeeplinkViewerContent(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding),
+            state = state,
+            onSearch = viewModel::onSearch
+        )
     }
 }
 
 @Composable
 private fun DeeplinkViewerContent(
-    padding: PaddingValues,
+    modifier: Modifier = Modifier,
+    state: DeeplinkViewerUiState,
+    onSearch: (String) -> Unit,
 ) {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(padding)
+        modifier = modifier
     ) {
         Column {
-            SearchBar()
-            DeeplinkViewCollection()
+            SearchBar(
+                model = state.text,
+                onTextChange = onSearch
+            )
+            DeeplinkViewCollection(state.data)
         }
     }
 }
 
 @Composable
-private fun SearchBar() {
-    OutlinedTextField(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        value = "",
-        onValueChange = {}
-    )
-}
-
-@Composable
-private fun DeeplinkViewCollection() {
+private fun DeeplinkViewCollection(data: List<Deeplink>) {
     LazyColumn(
         modifier = Modifier.padding(start = 16.dp, end = 16.dp)
     ) {
-        items(10) {
-            DeeplinkItem(it)
+        items(data, key = { it.id }) { deeplink ->
+            DeeplinkItem(deeplink)
         }
     }
 }
 
 @Composable
-private fun DeeplinkItem(it: Int) {
+private fun DeeplinkItem(deeplink: Deeplink) {
     Card(
         modifier = Modifier.padding(top = 8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         ListItem(
-            overlineContent = {
-                Text(
-                    text = "overlineContent",
-                )
-            },
             headlineContent = {
                 Text(
-                    text = "Hello $it!",
+                    text = deeplink.uri,
                 )
             },
             supportingContent = {
                 Text(
-                    text = "supportingContent",
+                    text = deeplink.referrer ?: "None",
                 )
             },
             leadingContent = {
@@ -136,6 +146,6 @@ private fun DeeplinkItem(it: Int) {
 @Composable
 fun GreetingPreview() {
     DeeplinkWatcherContainer {
-        DeeplinkViewerScreen()
+        //DeeplinkViewerScreen(viewModel)
     }
 }

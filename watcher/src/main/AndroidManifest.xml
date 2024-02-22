@@ -5,7 +5,7 @@
 
     <application>
         <activity
-            android:name=".internal.feature.viewer.DeeplinksViewerActivity"
+            android:name=".internal.feature.viewer.DeepLinksViewerActivity"
             android:exported="false"
             android:label="@string/title_activity_deeplinks_viewer"
             android:theme="@style/Theme.DeeplinkWatcher" />

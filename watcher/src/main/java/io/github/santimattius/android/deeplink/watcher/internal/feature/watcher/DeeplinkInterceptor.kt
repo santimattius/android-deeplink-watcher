@@ -2,7 +2,7 @@ package io.github.santimattius.android.deeplink.watcher.internal.feature.watcher
 
 import android.app.Activity
 import android.net.Uri
-import io.github.santimattius.android.deeplink.watcher.application.ExcludeDeeplinkWatch
+import io.github.santimattius.android.deeplink.watcher.annotations.ExcludeDeeplinkWatch
 import io.github.santimattius.android.deeplink.watcher.internal.core.data.DeeplinkRepository
 import io.github.santimattius.android.deeplink.watcher.internal.core.domain.Deeplink
 import io.github.santimattius.android.deeplink.watcher.internal.core.lifecycle.DefaultActivityLifecycleCallbacks
