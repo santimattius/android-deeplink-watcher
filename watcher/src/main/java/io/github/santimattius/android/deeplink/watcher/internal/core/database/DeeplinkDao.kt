@@ -15,11 +15,11 @@ interface DeeplinkDao {
     @Delete
     suspend fun delete(deeplink: DeeplinkEntity)
 
-    @Query("SELECT * FROM deeplink WHERE uri LIKE '%' || :text || '%' ")
+    @Query("SELECT * FROM deeplink WHERE uri LIKE '%' || :text || '%' ORDER by createAt desc")
     fun search(text: String): Flow<List<DeeplinkEntity>>
 
 
-    @Query("SELECT * FROM deeplink")
+    @Query("SELECT * FROM deeplink  ORDER by createAt desc")
     fun all(): Flow<List<DeeplinkEntity>>
 
 }

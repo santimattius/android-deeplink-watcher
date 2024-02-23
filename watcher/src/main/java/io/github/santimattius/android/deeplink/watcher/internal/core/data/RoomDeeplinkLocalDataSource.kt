@@ -30,7 +30,8 @@ class RoomDeeplinkLocalDataSource(
                 Deeplink(
                     id = it.uuid,
                     uri = it.uri,
-                    referrer = it.referrer
+                    referrer = it.referrer,
+                    createAt = it.createAt
                 )
             }
         }

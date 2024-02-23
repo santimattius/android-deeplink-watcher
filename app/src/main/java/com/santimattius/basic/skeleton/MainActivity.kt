@@ -29,8 +29,6 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.santimattius.basic.skeleton.ui.component.BasicSkeletonContainer
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.santimattius.android.deeplink.watcher.DeeplinkWatcher
@@ -48,21 +46,12 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainRoute(
-    viewModel: MainViewModel = hiltViewModel(),
-) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-    MainScreen(
-        state = state,
-        onMainAction = viewModel::sayHello,
-    )
+fun MainRoute() {
+    MainScreen()
 }
 
 @Composable
-fun MainScreen(
-    state: MainUiState,
-    onMainAction: () -> Unit,
-) {
+fun MainScreen() {
     val context = LocalContext.current
 
     Scaffold(
@@ -115,9 +104,6 @@ fun MainScreen(
 @Composable
 fun DefaultPreview() {
     BasicSkeletonContainer {
-        MainScreen(
-            state = MainUiState(isLoading = false, message = "Sample App"),
-            onMainAction = {},
-        )
+        MainScreen()
     }
 }

@@ -1,12 +1,16 @@
 package io.github.santimattius.android.deeplink.watcher.internal.core.domain
 
+import io.github.santimattius.android.deeplink.watcher.internal.core.extensions.isUrl
+import java.util.Date
 import java.util.UUID
 
 data class Deeplink(
     val id: String,
     val uri: String,
     val referrer: String?,
+    val createAt: Date,
 ) {
+    fun isWeb(): Boolean = uri.isUrl()
 
     companion object {
 
@@ -15,7 +19,8 @@ data class Deeplink(
             return Deeplink(
                 id = id,
                 uri = uri,
-                referrer = referrer
+                referrer = referrer,
+                createAt = Date()
             )
         }
     }
