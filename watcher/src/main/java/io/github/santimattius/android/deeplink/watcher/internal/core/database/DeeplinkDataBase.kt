@@ -10,7 +10,7 @@ import io.github.santimattius.android.deeplink.watcher.internal.core.database.co
 
 @Database(entities = [DeeplinkEntity::class], version = 1)
 @TypeConverters(DateConverter::class)
-abstract class DeeplinkDataBase : RoomDatabase() {
+internal abstract class DeeplinkDataBase : RoomDatabase() {
 
     abstract fun deeplinkDao(): DeeplinkDao
 

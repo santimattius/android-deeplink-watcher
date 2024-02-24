@@ -7,7 +7,7 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface DeeplinkDao {
+internal interface DeeplinkDao {
 
     @Insert
     suspend fun insert(deeplink: DeeplinkEntity)

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.Date
 
-class RoomDeeplinkLocalDataSource(
+internal class RoomDeeplinkLocalDataSource(
     private val dao: DeeplinkDao,
 ) : DeeplinkLocalDataSource {
     override suspend fun insert(deeplink: Deeplink) {

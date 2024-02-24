@@ -3,7 +3,7 @@ package io.github.santimattius.android.deeplink.watcher.internal.core.database.c
 import androidx.room.TypeConverter
 import java.util.Date
 
-class DateConverter {
+internal class DateConverter {
     @TypeConverter
     fun fromTimestamp(value: Long): Date {
         return Date(value)

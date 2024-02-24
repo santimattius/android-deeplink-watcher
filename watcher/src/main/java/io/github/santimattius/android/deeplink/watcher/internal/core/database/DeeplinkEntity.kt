@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.util.Date
 
 @Entity(tableName = "deeplink")
-data class DeeplinkEntity(
+internal data class DeeplinkEntity(
     @PrimaryKey val uuid: String,
     @ColumnInfo(name = "uri") val uri: String,
     @ColumnInfo(name = "referrer") val referrer: String?,

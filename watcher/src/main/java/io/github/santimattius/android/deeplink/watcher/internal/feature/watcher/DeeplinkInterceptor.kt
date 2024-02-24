@@ -2,20 +2,24 @@ package io.github.santimattius.android.deeplink.watcher.internal.feature.watcher
 
 import android.app.Activity
 import android.net.Uri
+import android.util.Log
 import io.github.santimattius.android.deeplink.watcher.annotations.ExcludeDeeplinkWatch
-import io.github.santimattius.android.deeplink.watcher.internal.core.data.DeeplinkRepository
-import io.github.santimattius.android.deeplink.watcher.internal.core.domain.Deeplink
+import io.github.santimattius.android.deeplink.watcher.internal.core.domain.DeepLinkRegister
 import io.github.santimattius.android.deeplink.watcher.internal.core.lifecycle.DefaultActivityLifecycleCallbacks
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 internal class DeeplinkInterceptor(
-    private val repository: DeeplinkRepository,
+    private val deepLinkRegister: DeepLinkRegister,
 ) : DefaultActivityLifecycleCallbacks {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        Log.e(this::class.simpleName, "UnHandledException: ${throwable.message}", throwable)
+    }
 
     override fun onActivityStarted(activity: Activity) {
         if (ensureWatchDeeplink(activity)) return
@@ -32,9 +36,8 @@ internal class DeeplinkInterceptor(
 
     private fun saveDeeplinkData(uri: Uri?, referrer: Uri?) {
         if (uri == null) return
-        val deeplink = Deeplink.create(uri.toString(), referrer?.toString())
-        coroutineScope.launch {
-            repository.insert(deeplink)
+        coroutineScope.launch(exceptionHandler) {
+            deepLinkRegister(uri.toString(), referrer?.toString())
         }
     }
 }
