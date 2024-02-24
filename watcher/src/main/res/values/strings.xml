@@ -1,4 +1,8 @@
 <resources>
     <string name="title_activity_deeplinks_viewer">DeeplinksViewerActivity</string>
     <string name="text_ej_search_query">Ej. scheme://host/path</string>
+    <string name="text_desc_delete_action">Delete</string>
+    <string name="text_close_action">Close</string>
+    <string name="title_deeplink_viewer">Deeplink Viewer</string>
+    <string name="text_content_not_available">Content not available</string>
 </resources>

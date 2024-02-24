@@ -6,5 +6,7 @@ import kotlinx.coroutines.flow.Flow
 internal interface DeeplinkLocalDataSource {
     suspend fun insert(deeplink: Deeplink)
     fun search(text: String): Flow<List<Deeplink>>
+    suspend fun delete(deeplink: Deeplink)
+    suspend fun deleteAll()
 
 }

@@ -1,6 +1,7 @@
 package io.github.santimattius.android.deeplink.watcher.internal.feature.viewer.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,28 +11,43 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.santimattius.android.deeplink.watcher.R
 import io.github.santimattius.android.deeplink.watcher.internal.core.domain.Deeplink
 import io.github.santimattius.android.deeplink.watcher.internal.core.extensions.format
+import io.github.santimattius.android.deeplink.watcher.internal.core.ui.components.CustomAnimatedVisibility
 import io.github.santimattius.android.deeplink.watcher.internal.core.ui.components.DeeplinkWatcherContainer
+import io.github.santimattius.android.deeplink.watcher.internal.core.ui.components.SwipeToDismissComponent
 import java.util.Date
 
+internal sealed interface DeeplinkViewCollectionAction {
+    data object DeleteAll : DeeplinkViewCollectionAction
+
+    data class Deleted(val deeplink: Deeplink) : DeeplinkViewCollectionAction
+    data class Clicked(val deeplink: Deeplink) : DeeplinkViewCollectionAction
+}
 
 @Composable
-internal fun DeeplinkViewCollection(data: List<Deeplink>) {
+internal fun DeeplinkViewCollection(
+    data: List<Deeplink>,
+    onAction: (DeeplinkViewCollectionAction) -> Unit = {}
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -42,7 +58,30 @@ internal fun DeeplinkViewCollection(data: List<Deeplink>) {
             )
     ) {
         items(data, key = { it.id }) { deeplink ->
-            DeeplinkItem(deeplink)
+            DeeplinkCard(
+                deeplink = deeplink,
+                onItemClick = { onAction(DeeplinkViewCollectionAction.Clicked(it)) },
+                onItemDelete = { onAction(DeeplinkViewCollectionAction.Deleted(it)) }
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun DeeplinkCard(
+    deeplink: Deeplink,
+    onItemClick: (Deeplink) -> Unit,
+    onItemDelete: (Deeplink) -> Unit
+) {
+    val dismissState = rememberSwipeToDismissBoxState()
+    val isDismissed = dismissState.currentValue == SwipeToDismissBoxValue.EndToStart
+    if (isDismissed) {
+        onItemDelete(deeplink)
+    }
+    CustomAnimatedVisibility(visible = isDismissed) {
+        SwipeToDismissComponent(dismissState = dismissState) {
+            DeeplinkItem(deeplink = deeplink, onClick = onItemClick)
         }
     }
 }
@@ -61,16 +100,21 @@ internal fun EmptyDeeplinkCollection() {
             contentDescription = ""
         )
         Text(
-            text = "No content available",
+            text = stringResource(R.string.text_content_not_available),
             style = MaterialTheme.typography.titleLarge
         )
     }
 }
 
 @Composable
-private fun DeeplinkItem(deeplink: Deeplink) {
+private fun DeeplinkItem(
+    deeplink: Deeplink,
+    onClick: (Deeplink) -> Unit,
+) {
     Card(
-        modifier = Modifier.padding(top = 4.dp, bottom = 4.dp),
+        modifier = Modifier
+            .clickable { onClick(deeplink) }
+            .padding(top = 4.dp, bottom = 4.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
@@ -124,7 +168,8 @@ fun DeeplinkItemPreview() {
                 uri = "http://github.com/santimattius",
                 referrer = "app-android://",
                 createAt = Date()
-            )
+            ),
+            onClick = {}
         )
     }
 }

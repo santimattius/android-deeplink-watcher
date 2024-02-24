@@ -14,4 +14,12 @@ internal class DeeplinkRepository(
     fun search(text: String): Flow<List<Deeplink>> {
         return deeplinkLocalDataSource.search(text)
     }
+
+    suspend fun delete(deeplink: Deeplink) {
+        deeplinkLocalDataSource.delete(deeplink)
+    }
+
+    suspend fun deleteAll() {
+        deeplinkLocalDataSource.deleteAll()
+    }
 }

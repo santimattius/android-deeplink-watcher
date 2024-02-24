@@ -6,9 +6,21 @@
     <application>
         <activity
             android:name=".internal.feature.viewer.DeepLinksViewerActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_deeplinks_viewer"
-            android:theme="@style/Theme.DeeplinkWatcher" />
+            android:theme="@style/Theme.DeeplinkWatcher">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="dw" />
+                <data android:host="santimattius" />
+                <data android:pathPrefix="/viewer" />
+
+            </intent-filter>
+        </activity>
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"

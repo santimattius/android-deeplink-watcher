@@ -3,6 +3,7 @@ package io.github.santimattius.android.deeplink.watcher.internal.feature.viewer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.santimattius.android.deeplink.watcher.internal.core.data.DeeplinkRepository
+import io.github.santimattius.android.deeplink.watcher.internal.feature.viewer.components.DeeplinkViewCollectionAction
 import io.github.santimattius.android.deeplink.watcher.internal.feature.viewer.components.SearchBarModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -35,6 +36,25 @@ internal class DeepLinksViewerViewModel(
         _uiState.update { it.copy(text = SearchBarModel(text)) }
         if (text.isEmpty()) {
             onSearch()
+        }
+    }
+
+    fun onItemAction(action: DeeplinkViewCollectionAction) {
+        when(action){
+            is DeeplinkViewCollectionAction.Clicked -> {
+
+            }
+            is DeeplinkViewCollectionAction.Deleted -> {
+                viewModelScope.launch {
+                    deeplinkRepository.delete(action.deeplink)
+                }
+            }
+
+            DeeplinkViewCollectionAction.DeleteAll -> {
+                viewModelScope.launch {
+                    deeplinkRepository.deleteAll()
+                }
+            }
         }
     }
 }

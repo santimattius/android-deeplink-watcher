@@ -3,9 +3,10 @@ package io.github.santimattius.android.deeplink.watcher.internal.feature.watcher
 import android.app.Activity
 import android.net.Uri
 import android.util.Log
-import io.github.santimattius.android.deeplink.watcher.annotations.ExcludeDeeplinkWatch
+import io.github.santimattius.android.deeplink.watcher.annotations.ExcludeFromDeeplinkWatcher
 import io.github.santimattius.android.deeplink.watcher.internal.core.domain.DeepLinkRegister
 import io.github.santimattius.android.deeplink.watcher.internal.core.lifecycle.DefaultActivityLifecycleCallbacks
+import io.github.santimattius.android.deeplink.watcher.internal.feature.viewer.DeepLinksViewerActivity
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,7 +32,8 @@ internal class DeeplinkInterceptor(
     }
 
     private fun ensureWatchDeeplink(activity: Activity): Boolean {
-        return activity::class.annotations.any { it.annotationClass == ExcludeDeeplinkWatch::annotationClass }
+        if (activity is DeepLinksViewerActivity) return true
+        return activity::class.annotations.firstOrNull { it.annotationClass == ExcludeFromDeeplinkWatcher::class } != null
     }
 
     private fun saveDeeplinkData(uri: Uri?, referrer: Uri?) {

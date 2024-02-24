@@ -24,6 +24,7 @@ object DeeplinkWatcher {
         initializer.create(context.applicationContext)
     }
 
+    @JvmStatic
     fun watch(coroutineScope: CoroutineScope, block: suspend (DeepLinkInfo) -> Unit) {
         eventBus.subscribe(coroutineScope) { event ->
             if (event is DeepLinkCreatedEvent) {

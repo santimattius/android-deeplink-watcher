@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,16 +18,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.santimattius.android.deeplink.watcher.R
-import io.github.santimattius.android.deeplink.watcher.annotations.ExcludeDeeplinkWatch
+import io.github.santimattius.android.deeplink.watcher.annotations.ExcludeFromDeeplinkWatcher
 import io.github.santimattius.android.deeplink.watcher.internal.core.ui.components.AppBar
+import io.github.santimattius.android.deeplink.watcher.internal.core.ui.components.AppBarIcon
 import io.github.santimattius.android.deeplink.watcher.internal.core.ui.components.AppBarIconModel
 import io.github.santimattius.android.deeplink.watcher.internal.core.ui.components.DeeplinkWatcherContainer
 import io.github.santimattius.android.deeplink.watcher.internal.di.createDeepLinksViewerViewModel
 import io.github.santimattius.android.deeplink.watcher.internal.feature.viewer.components.DeeplinkViewCollection
+import io.github.santimattius.android.deeplink.watcher.internal.feature.viewer.components.DeeplinkViewCollectionAction
 import io.github.santimattius.android.deeplink.watcher.internal.feature.viewer.components.EmptyDeeplinkCollection
 import io.github.santimattius.android.deeplink.watcher.internal.feature.viewer.components.SearchBar
 
-@ExcludeDeeplinkWatch
+@ExcludeFromDeeplinkWatcher
 class DeepLinksViewerActivity : ComponentActivity() {
 
     private val viewModel: DeepLinksViewerViewModel by viewModels {
@@ -56,12 +59,21 @@ private fun DeeplinkViewerScreen(
     Scaffold(
         topBar = {
             AppBar(
-                title = "Deeplink Viewer",
+                title = stringResource(R.string.title_deeplink_viewer),
                 navIcon = AppBarIconModel(
                     icon = Icons.Default.Close,
-                    contentDescription = "close",
+                    contentDescription = stringResource(R.string.text_close_action),
                     action = onClose
-                )
+                ),
+                actions = {
+                    AppBarIcon(
+                        navIcon = AppBarIconModel(
+                            icon = Icons.Default.Delete,
+                            contentDescription = stringResource(R.string.text_close_action),
+                            action = { viewModel.onItemAction(DeeplinkViewCollectionAction.DeleteAll) }
+                        )
+                    )
+                }
             )
         }
     ) { padding ->
@@ -73,7 +85,8 @@ private fun DeeplinkViewerScreen(
                 .padding(padding),
             state = state,
             onTextChange = viewModel::onWritingSearch,
-            onSearch = viewModel::onSearch
+            onSearch = viewModel::onSearch,
+            onViewCollectionAction = viewModel::onItemAction
         )
     }
 }
@@ -84,6 +97,7 @@ private fun DeeplinkViewerContent(
     state: DeeplinkViewerUiState,
     onTextChange: (String) -> Unit,
     onSearch: () -> Unit,
+    onViewCollectionAction: (DeeplinkViewCollectionAction) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -99,7 +113,10 @@ private fun DeeplinkViewerContent(
         if (isEmpty) {
             EmptyDeeplinkCollection()
         } else {
-            DeeplinkViewCollection(state.data)
+            DeeplinkViewCollection(
+                data = state.data,
+                onAction = onViewCollectionAction
+            )
         }
     }
 }
@@ -112,7 +129,8 @@ fun DeeplinkContentPreview() {
         DeeplinkViewerContent(
             state = DeeplinkViewerUiState(),
             onTextChange = {},
-            onSearch = {}
+            onSearch = {},
+            onViewCollectionAction = {}
         )
     }
 }
