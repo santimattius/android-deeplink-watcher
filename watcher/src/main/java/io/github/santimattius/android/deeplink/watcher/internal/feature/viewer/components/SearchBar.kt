@@ -25,8 +25,9 @@ data class SearchBarModel(
 @Composable
 internal fun SearchBar(
     model: SearchBarModel,
-    label: String,
+    label: String = "",
     onTextChange: (String) -> Unit,
+    enabled: Boolean = true,
     onImeAction: () -> Unit = {},
 ) {
     InputText(
@@ -35,6 +36,7 @@ internal fun SearchBar(
             .padding(16.dp),
         text = model.value,
         label = label,
+        enabled = enabled,
         onTextChange = onTextChange,
         onImeAction = onImeAction
     )
@@ -42,10 +44,11 @@ internal fun SearchBar(
 
 @Composable
 private fun InputText(
-    text: String,
-    label: String,
-    onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    text: String,
+    onTextChange: (String) -> Unit,
+    label: String = "",
+    enabled: Boolean = true,
     onImeAction: () -> Unit = {},
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -53,6 +56,7 @@ private fun InputText(
         value = text,
         onValueChange = onTextChange,
         maxLines = 1,
+        enabled = enabled,
         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
         keyboardActions = KeyboardActions(onSearch = {
             onImeAction()

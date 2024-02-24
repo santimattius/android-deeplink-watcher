@@ -1,3 +1,4 @@
 <resources>
     <string name="title_activity_deeplinks_viewer">DeeplinksViewerActivity</string>
+    <string name="text_ej_search_query">Ej. scheme://host/path</string>
 </resources>
