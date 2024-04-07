@@ -30,10 +30,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.santimattius.basic.skeleton.ui.component.BasicSkeletonContainer
-import dagger.hilt.android.AndroidEntryPoint
 import io.github.santimattius.android.deeplink.watcher.DeeplinkWatcher
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

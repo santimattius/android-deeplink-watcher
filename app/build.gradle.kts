@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.kotlin)
     alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
-    alias(libs.plugins.hilt)
     alias(libs.plugins.google.secrets.gradle.plugin)
 }
 
@@ -85,6 +84,8 @@ detekt {
 
 dependencies {
 
+    implementation(project(":watcher"))
+
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.lifecycle.viewmodel.compose)
@@ -93,7 +94,6 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
     implementation(libs.activity.compose)
-    implementation(project(":watcher"))
     implementation(libs.compose.ui)
     implementation(libs.ui.graphics)
     implementation(libs.compose.tooling.preview)
@@ -105,15 +105,6 @@ dependencies {
 
     implementation(libs.bundles.coroutine)
     testImplementation(libs.coroutine.test)
-    implementation(libs.bundles.retrofit)
-    implementation(libs.gson.core)
-    testImplementation(libs.mockwebserver)
-
-    implementation(libs.hilt.android)
-    implementation(libs.hilt.navigation)
-    ksp(libs.hilt.compiler)
-
-    implementation(libs.coil.core)
 
     testImplementation(platform(libs.compose.bom))
     testImplementation(libs.junit)
@@ -122,5 +113,4 @@ dependencies {
     androidTestImplementation(libs.compose.ui.test.junit)
     androidTestImplementation(libs.test.ext)
     androidTestImplementation(libs.test.espresso)
-
 }
