@@ -22,4 +22,8 @@ internal class DeeplinkRepository(
     suspend fun deleteAll() {
         deeplinkLocalDataSource.deleteAll()
     }
+
+    suspend fun findById(id: String): Result<Deeplink> {
+        return deeplinkLocalDataSource.findById(id)
+    }
 }

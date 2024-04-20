@@ -8,11 +8,29 @@ import io.github.santimattius.android.deeplink.watcher.internal.core.database.De
 import io.github.santimattius.android.deeplink.watcher.internal.core.domain.DeepLinkRegister
 import io.github.santimattius.android.deeplink.watcher.internal.core.event.EventBus
 import io.github.santimattius.android.deeplink.watcher.internal.core.event.FlowsEventBus
+import io.github.santimattius.android.deeplink.watcher.internal.navigation.LocalNavigationController
+import io.github.santimattius.android.deeplink.watcher.internal.navigation.NavigationController
 
 internal object DependencyProvider {
 
     @Volatile
     private var database: DeeplinkDataBase? = null
+
+    @Volatile
+    private var navController: NavigationController? = null
+
+
+    fun provideNavController(context: Context): NavigationController {
+        synchronized(this) {
+            return navController ?: createNavController(context.applicationContext)
+        }
+    }
+
+    private fun createNavController(context: Context): NavigationController {
+        val controller = LocalNavigationController(context)
+        navController = controller
+        return controller
+    }
 
     fun provideDeepLinkRegister(context: Context): DeepLinkRegister {
         val repository = provideDeeplinkRepository(context)

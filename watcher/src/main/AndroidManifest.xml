@@ -21,6 +21,8 @@
 
             </intent-filter>
         </activity>
+        <activity android:name=".internal.feature.detail.DeepLinkDetailActivity" />
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"

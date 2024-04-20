@@ -43,7 +43,6 @@ private val LightColors = lightColorScheme(
 )
 
 
-
 @Composable
 fun DeeplinkWatcherTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -54,7 +53,7 @@ fun DeeplinkWatcherTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
+            window.statusBarColor = colorScheme.primary.copy(alpha = 0.8f).toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }

@@ -9,4 +9,5 @@ internal interface DeeplinkLocalDataSource {
     suspend fun delete(deeplink: Deeplink)
     suspend fun deleteAll()
 
+    suspend fun findById(id: String): Result<Deeplink>
 }

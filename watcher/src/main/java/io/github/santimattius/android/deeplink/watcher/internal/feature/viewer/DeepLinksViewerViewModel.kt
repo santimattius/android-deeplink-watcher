@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import io.github.santimattius.android.deeplink.watcher.internal.core.data.DeeplinkRepository
 import io.github.santimattius.android.deeplink.watcher.internal.feature.viewer.components.DeeplinkViewCollectionAction
 import io.github.santimattius.android.deeplink.watcher.internal.feature.viewer.components.SearchBarModel
+import io.github.santimattius.android.deeplink.watcher.internal.navigation.NavigationController
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -12,6 +13,7 @@ import kotlinx.coroutines.launch
 
 internal class DeepLinksViewerViewModel(
     private val deeplinkRepository: DeeplinkRepository,
+    private val navController: NavigationController,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DeeplinkViewerUiState())
@@ -40,10 +42,11 @@ internal class DeepLinksViewerViewModel(
     }
 
     fun onItemAction(action: DeeplinkViewCollectionAction) {
-        when(action){
+        when (action) {
             is DeeplinkViewCollectionAction.Clicked -> {
-
+                navController.goToDetail(action.deeplink.id)
             }
+
             is DeeplinkViewCollectionAction.Deleted -> {
                 viewModelScope.launch {
                     deeplinkRepository.delete(action.deeplink)

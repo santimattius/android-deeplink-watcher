@@ -52,4 +52,17 @@ internal class RoomDeeplinkLocalDataSource(
     override suspend fun deleteAll() {
         withContext(dispatcher) { dao.deleteAll() }
     }
+
+    override suspend fun findById(id: String): Result<Deeplink> = runCatching {
+        withContext(dispatcher) {
+            dao.findById(id).let {
+                Deeplink(
+                    id = it.uuid,
+                    uri = it.uri,
+                    referrer = it.referrer,
+                    createAt = it.createAt
+                )
+            }
+        }
+    }
 }

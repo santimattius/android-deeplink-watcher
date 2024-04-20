@@ -24,4 +24,7 @@ internal interface DeeplinkDao {
     @Query("DELETE FROM deeplink")
     fun deleteAll()
 
+    @Query("SELECT * FROM deeplink WHERE uuid=:id LIMIT 1")
+    suspend fun findById(id: String): DeeplinkEntity
+
 }
