@@ -19,6 +19,7 @@ internal class LocalNavigationController(
 
     override fun goToViewer() {
         val intent = Intent(context, DeepLinksViewerActivity::class.java)
+        intent.flags = FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }
 }

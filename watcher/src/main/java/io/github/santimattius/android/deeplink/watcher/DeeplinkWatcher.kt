@@ -1,10 +1,8 @@
 package io.github.santimattius.android.deeplink.watcher
 
 import android.content.Context
-import android.content.Intent
 import io.github.santimattius.android.deeplink.watcher.internal.core.domain.DeepLinkCreatedEvent
 import io.github.santimattius.android.deeplink.watcher.internal.di.DependencyProvider
-import io.github.santimattius.android.deeplink.watcher.internal.feature.viewer.DeepLinksViewerActivity
 import io.github.santimattius.android.deeplink.watcher.internal.initializer.DeeplinkWatcherInitializer
 import kotlinx.coroutines.CoroutineScope
 
@@ -14,8 +12,8 @@ object DeeplinkWatcher {
 
     @JvmStatic
     fun showViewer(context: Context) {
-        val intent = Intent(context, DeepLinksViewerActivity::class.java)
-        context.startActivity(intent)
+        val navController = DependencyProvider.provideNavController(context)
+        navController.goToViewer()
     }
 
     @JvmStatic

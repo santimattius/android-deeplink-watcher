@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin)
     alias(libs.plugins.ksp)
+    id("maven-publish")
 }
 
 android {
@@ -46,6 +47,21 @@ android {
         }
     }
 }
+
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            groupId = extraString("group_id")
+            artifactId = extraString("artifact_id")
+            version = extraString("lib_version")
+
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
+    }
+}
+
 
 dependencies {
 

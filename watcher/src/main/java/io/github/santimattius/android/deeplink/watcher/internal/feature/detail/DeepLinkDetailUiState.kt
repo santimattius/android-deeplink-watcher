@@ -6,4 +6,8 @@ internal data class DeepLinkDetailUiState(
     val isLoading: Boolean = false,
     val deepLink: Deeplink? = null,
     val withError: Boolean = false
-)
+) {
+
+    val isDeepLinkAvailable: Boolean
+        get() = !isLoading && !withError && deepLink != null
+}

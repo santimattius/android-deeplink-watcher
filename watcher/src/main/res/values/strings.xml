@@ -5,4 +5,8 @@
     <string name="text_close_action">Close</string>
     <string name="title_deeplink_viewer">Deeplink Viewer</string>
     <string name="text_content_not_available">Content not available</string>
+    <string name="label_create_at">CreateAt</string>
+    <string name="label_from">From</string>
+    <string name="label_uri">Uri</string>
+    <string name="text_message_unavailable_deeplink_detail">Content not available</string>
 </resources>

@@ -116,7 +116,7 @@ private fun DeeplinkItem(
             .clickable { onClick(deeplink) }
             .padding(top = 4.dp, bottom = 4.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
     ) {
         ListItem(
             colors = ListItemDefaults.colors(
@@ -150,6 +150,7 @@ private fun DeeplinkItem(
                             R.drawable.ic_phone
                         }
                     ),
+                    tint = MaterialTheme.colorScheme.primary,
                     contentDescription = null
                 )
 

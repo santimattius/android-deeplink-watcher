@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.santimattius.android.deeplink.watcher.R
 import io.github.santimattius.android.deeplink.watcher.annotations.ExcludeFromDeeplinkWatcher
+import io.github.santimattius.android.deeplink.watcher.internal.core.domain.Deeplink
 import io.github.santimattius.android.deeplink.watcher.internal.core.ui.components.AppBar
 import io.github.santimattius.android.deeplink.watcher.internal.core.ui.components.AppBarIcon
 import io.github.santimattius.android.deeplink.watcher.internal.core.ui.components.AppBarIconModel
@@ -124,10 +125,25 @@ private fun DeeplinkViewerContent(
 
 @Preview
 @Composable
-fun DeeplinkContentPreview() {
+fun DeeplinkEmptyContentPreview() {
     DeeplinkWatcherContainer {
         DeeplinkViewerContent(
             state = DeeplinkViewerUiState(),
+            onTextChange = {},
+            onSearch = {},
+            onViewCollectionAction = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+fun DeeplinkContentPreview() {
+    DeeplinkWatcherContainer {
+        DeeplinkViewerContent(
+            state = DeeplinkViewerUiState(
+                data = (1..10).map { Deeplink.create("app://test/${it}") }
+            ),
             onTextChange = {},
             onSearch = {},
             onViewCollectionAction = {}
