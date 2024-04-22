@@ -1,6 +1,6 @@
 package io.github.santimattius.android.deeplink.watcher.internal.navigation
 
-interface NavigationController {
+internal interface NavigationController {
 
     fun goToDetail(id: String)
 
