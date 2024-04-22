@@ -9,7 +9,7 @@ googleSecretsPlugin = "2.0.1"
 androidxComposeBom = "2024.04.00"
 activityCompose = "1.8.2"
 
-coreKtx = "1.12.0"
+coreKtx = "1.13.0"
 lifecycle = "2.7.0"
 coroutine = "1.8.0"
 roomVersion = "2.6.1"
