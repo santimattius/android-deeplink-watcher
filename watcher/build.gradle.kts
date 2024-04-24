@@ -49,20 +49,6 @@ android {
 }
 
 
-afterEvaluate {
-    publishing {
-        publications {
-            // Creates a Maven publication called "release".
-            register<MavenPublication>("release") {
-                from(components["release"])
-                groupId = extraString("group_id")
-                artifactId = extraString("artifact_id")
-                version = extraString("lib_version")
-            }
-        }
-    }
-}
-
 dependencies {
 
     implementation(kotlin("reflect"))
@@ -106,4 +92,18 @@ dependencies {
 
 fun extraString(key: String): String {
     return extra[key] as String
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            register<MavenPublication>("release") {
+                from(components["release"])
+                groupId = extraString("group_id")
+                artifactId = extraString("artifact_id")
+                version = extraString("lib_version")
+            }
+        }
+    }
 }

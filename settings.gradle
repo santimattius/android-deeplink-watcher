@@ -16,5 +16,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "android-deeplink-watcher"
-//include ':app'
+include ':app'
 include ':watcher'
