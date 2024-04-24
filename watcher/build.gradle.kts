@@ -48,20 +48,20 @@ android {
     }
 }
 
-publishing {
-    publications {
-        register<MavenPublication>("release") {
-            groupId = extraString("group_id")
-            artifactId = extraString("artifact_id")
-            version = extraString("lib_version")
 
-            afterEvaluate {
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            register<MavenPublication>("release") {
                 from(components["release"])
+                groupId = extraString("group_id")
+                artifactId = extraString("artifact_id")
+                version = extraString("lib_version")
             }
         }
     }
 }
-
 
 dependencies {
 
