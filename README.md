@@ -23,20 +23,20 @@ DeepLink Watcher offers a mechanism to capture the deeplinks that are executed i
 You can add this library to your Android project using Gradle. Make sure to add the repository in your `build.gradle` file at the project level:
 
 ```groovy
-	dependencyResolutionManagement {
-		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-		repositories {
-			mavenCentral()
-			maven { url 'https://jitpack.io' }
-		}
-	}
+dependencyResolutionManagement {
+   repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+   repositories {
+	mavenCentral()
+	maven { url 'https://jitpack.io' }
+   }
+}
 ```
 
 Next, add the dependency to your `build.gradle` file at the application level:
 
 ```groovy
 dependencies {
-	 implementation "com.github.santimattius:android-deeplink-watcher:${version}"
+   implementation "com.github.santimattius:android-deeplink-watcher:${version}"
 }
 ```
 
