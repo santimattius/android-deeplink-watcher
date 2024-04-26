@@ -3,7 +3,7 @@
 
 DeepLink Watcher offers a mechanism to capture the deeplinks that are executed in our application, simplifying their visualization in a simple way.
 
-## (Screenshot)
+## Screenshot
 <p align="center">
   <img width="270" src="https://github.com/santimattius/android-deeplink-watcher/blob/master/screenshots/deeplink-viewer.png?raw=true"/>
   <img width="270" src="https://github.com/santimattius/android-deeplink-watcher/blob/master/screenshots/deeplink-detail.png?raw=true"/>
