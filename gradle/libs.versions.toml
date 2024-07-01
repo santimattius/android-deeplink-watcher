@@ -17,7 +17,7 @@ startupAndroid = "1.1.1"
 # Testing
 junit = "4.13.2"
 junitExt = "1.1.5"
-espressoCore = "3.5.1"
+espressoCore = "3.6.1"
 appcompat = "1.7.0"
 material = "1.12.0"
 
