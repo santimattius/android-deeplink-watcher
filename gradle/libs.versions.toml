@@ -3,7 +3,7 @@
 androidGradlePlugin = "8.5.1"
 kotlinGradlePlugin = "2.0.0"
 detektGradlePlugin = "1.23.6"
-ksp = "2.0.0-1.0.23"
+ksp = "2.0.0-1.0.24"
 googleSecretsPlugin = "2.0.1"
 # Core
 androidxComposeBom = "2024.06.00"
