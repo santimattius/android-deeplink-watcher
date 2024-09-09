@@ -7,7 +7,7 @@ detektGradlePlugin = "1.23.6"
 ksp = "2.0.20-1.0.24"
 googleSecretsPlugin = "2.0.1"
 # Core
-androidxComposeBom = "2024.08.00"
+androidxComposeBom = "2024.09.00"
 activityCompose = "1.9.1"
 
 coreKtx = "1.13.1"
