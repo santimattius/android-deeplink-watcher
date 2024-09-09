@@ -1,17 +1,18 @@
 [versions]
 # Plugins
-androidGradlePlugin = "8.5.2"
+androidGradlePlugin = "8.6.0"
 kotlinGradlePlugin = "2.0.20"
 
-detektGradlePlugin = "1.23.6"
+detektGradlePlugin = "1.23.7"
 ksp = "2.0.20-1.0.25"
+
 googleSecretsPlugin = "2.0.1"
 # Core
-androidxComposeBom = "2024.08.00"
+androidxComposeBom = "2024.09.00"
 activityCompose = "1.9.1"
 
 coreKtx = "1.13.1"
-lifecycle = "2.8.4"
+lifecycle = "2.8.5"
 coroutine = "1.8.1"
 roomVersion = "2.6.1"
 startupAndroid = "1.1.1"
