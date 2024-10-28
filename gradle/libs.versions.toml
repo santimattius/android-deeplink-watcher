@@ -4,7 +4,7 @@ androidGradlePlugin = "8.7.0"
 kotlinGradlePlugin = "2.0.21"
 
 detektGradlePlugin = "1.23.7"
-ksp = "2.0.21-1.0.25"
+ksp = "2.0.21-1.0.26"
 
 googleSecretsPlugin = "2.0.1"
 # Core
