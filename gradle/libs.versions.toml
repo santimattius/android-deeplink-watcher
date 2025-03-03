@@ -1,15 +1,14 @@
 [versions]
 # Plugins
-androidGradlePlugin = "8.8.1"
+androidGradlePlugin = "8.8.2"
 kotlinGradlePlugin = "2.1.10"
-
 detektGradlePlugin = "1.23.8"
-ksp = "2.1.10-1.0.30"
+ksp = "2.1.10-1.0.31"
 
 googleSecretsPlugin = "2.0.1"
 # Core
 androidxComposeBom = "2025.02.00"
-activityCompose = "1.10.0"
+activityCompose = "1.10.1"
 
 coreKtx = "1.15.0"
 lifecycle = "2.8.7"
