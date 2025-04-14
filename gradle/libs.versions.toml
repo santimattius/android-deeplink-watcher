@@ -14,7 +14,7 @@ coreKtx = "1.15.0"
 lifecycle = "2.8.7"
 
 coroutine = "1.10.1"
-roomVersion = "2.6.1"
+roomVersion = "2.7.0"
 startupAndroid = "1.2.0"
 # Testing
 junit = "4.13.2"
