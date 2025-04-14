@@ -13,7 +13,7 @@ activityCompose = "1.10.1"
 coreKtx = "1.15.0"
 lifecycle = "2.8.7"
 
-coroutine = "1.10.1"
+coroutine = "1.10.2"
 roomVersion = "2.6.1"
 startupAndroid = "1.2.0"
 # Testing
