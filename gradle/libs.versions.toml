@@ -11,7 +11,7 @@ androidxComposeBom = "2025.04.01"
 activityCompose = "1.10.1"
 
 coreKtx = "1.16.0"
-lifecycle = "2.8.7"
+lifecycle = "2.9.0"
 
 coroutine = "1.10.2"
 roomVersion = "2.7.1"
